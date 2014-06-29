@@ -34,3 +34,8 @@ Icon
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
+/PasswordGenerator/packages
+/PasswordGenerator/PasswordGenerator/bin
+/PasswordGenerator/PasswordGenerator/obj/Debug
+*.user
+*.suo
