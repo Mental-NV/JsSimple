@@ -8,6 +8,16 @@
         <p id="passwords"/>
     </div>
     <script src="Scripts/jquery-2.1.1.min.js"></script>
-    <script src="Scripts/CallApi.js"></script>
+    <script>
+        var uri = "api/passwords";
+        $(document).ready(function () {
+            $.getJSON(uri)
+                .done(function (data) {
+                    $.each(data, function (key, item) {
+                        $("<li>", { text: item }).appendTo($("#passwords"));
+                    });
+                });
+        });
+    </script>
 </body>
 </html>
