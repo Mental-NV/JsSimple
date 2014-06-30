@@ -39,3 +39,4 @@ Icon
 /PasswordGenerator/PasswordGenerator/obj/Debug
 *.user
 *.suo
+/PasswordGenerator/PasswordGenerator/obj/Release
