@@ -1,5 +1,6 @@
 ﻿namespace PasswordGenerator.Controllers
 {
+    using PasswordGenerator.Models;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -13,15 +14,20 @@
     {
         private readonly Random _random = new Random();
 
-        public IEnumerable<string> GetAll()
+        private IEnumerable<string> Get(Options options)
         {
             var count = 10;
             var list = new List<string>(count);
             for (int i = 0; i < count; i++)
             {
-                list.Add(Generate(10));
+                list.Add(Generate(options));
             }
             return list;
+        }
+
+        public IEnumerable<string> GetAll()
+        {
+            return Get(new Options());
         }
 
         private string RandomSymbol()
@@ -82,38 +88,38 @@
             return n.ToString();
         }
 
-        private string Generate(int minLength = 10)
+        private string Generate(Options options)
         {
             var pass = new StringBuilder();
             var odd = false;
             var wasNumber = false;
             var wasSymbol = false;
-            while (pass.Length < minLength)
+            while (pass.Length < options.MinLength)
             {
                 odd = !odd;
                 if (odd)
                 {
-                    pass.Append(RandomWord(true));
+                    pass.Append(RandomWord(options.IsRandomlyCapitalize));
                 }
                 else
                 {
-                    if (RandomBool())
+                    if (options.IsIncludeSymbols && RandomBool())
                     {
                         pass.Append(RandomSymbol());
                         wasSymbol = true;
                     }
-                    else
+                    else if (options.IsIncludeNumbers)
                     {
                         pass.Append(RandomNumber());
                         wasNumber = true;
                     }
                 }
             }
-            if (!wasNumber)
+            if (!wasNumber && options.IsIncludeNumbers)
             {
                 pass.Append(RandomNumber());
             }
-            if (!wasSymbol)
+            if (!wasSymbol && options.IsIncludeSymbols)
             {
                 pass.Append(RandomSymbol());
             }
