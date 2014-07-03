@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Password Generator</title>
+    <style>
+    html {
+		height: 100%;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-color: #00b7ea;
+		background: linear-gradient(to bottom, #00b7ea 0%,#009ec3 100%); 
+	}
+    .pass {
+		margin-bottom: 50px;
+		font-family: "Courier New";
+		font-size: 20px;
+		font-weight: bold;
+	}
+    h1 {
+		font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+		font-size: 32px;
+		font-weight: bold;
+	}
+    h3 {
+		font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+		font-size: 20px;
+	}
+    span {
+		font-size: 20px;
+		font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	}
+    .btnGenerate {
+		font-size: 16px;
+	}
+    </style>
+</head>
+<body>
+	<div>
+		<h1>Password Generator</h1>
+	<div id="outputs" style="height:230px;margin-left: 30px;">
+        	<!--<span class="pass" >
+			suzy$hokan6</span><br />
+			<span class="pass" >
+			alpen{Lapel32</span><br />
+			<span class="pass" >
+			akra39botH&amp;</span><br />
+			<span class="pass" >
+			pluTo70fiend@</span><br />
+			<span class="pass" >
+			gowl40Testy=</span><br />
+			<span class="pass" >
+			GuAn87zOoks(</span><br />
+			<span class="pass" >
+			Anear=LobE25</span><br />
+			<span class="pass" >
+			cunza=hIspa75</span><br />
+			<span class="pass" >
+			cucK(goEty65</span><br />
+			<span class="pass" >
+			Fore@March93</span>-->
+	</div>
+	</div>
+    <div id="options">
+        <h3>Options</h3>
+        <span>Create a random pass phrase consisting of short words.</span><br/>
+        <input checked="checked" type="checkbox" id="chNumbers" value="1" /><span>Include Numbers</span><br/>
+        <input checked="checked" type="checkbox" id="chSymbols" value="1" /><span>Include Symbols<br>Minimum Password Lenght  
+		<input id="txtMinLength" value="10" style="width: 40px; font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; vertical-align: middle;" /> characters</span><br />
+        <input checked="checked" type="checkbox" id="chCapital" value="1" /><span>Randomly Capitalize Letters</span><br />
+    </div>
+    <script src="Scripts/jquery-2.1.1.min.js"></script>
+    <script>
+        "use strict";
+        function randomString(length, chars) {
+            var mask = '';
+            if (chars.indexOf('a') > -1) mask += 'abcdefghijklmnopqrstuvwxyz';
+            if (chars.indexOf('A') > -1) mask += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            if (chars.indexOf('#') > -1) mask += '0123456789';
+            if (chars.indexOf('!') > -1) mask += '~!@#$%^&*()_+-={}:;';
+            var result = '';
+            for (var i = length; i > 0; --i) result += mask[Math.round(Math.random() * (mask.length - 1))];
+            return result;
+        }
+        function output(pass) {
+            var outputs = $("#outputs");
+            var newLine = $("<span>");
+            newLine.html(pass);
+            newLine.addClass("pass");
+            outputs.append(newLine);
+            outputs.append($("<br/>"));
+        }
+        function randomWord(dic, isRandCapital) {
+            var w = dic[Math.round(Math.random() * (dic.length - 1))];
+            w = w.toLowerCase();
+            if (isRandCapital) {
+                var nw = "";
+                for (var i = 0; i < w.length; i++) {
+                    if (randomBool(0.2)) {
+                        nw += w[i].toUpperCase();
+                    } else {
+                        nw += w[i].toLowerCase();
+                    }
+                }
+                w = nw;
+            }
+            return w;
+        }
+        function randomNumber() {
+            return Math.round(Math.random() * 100);
+        }
+        function randomSymbol() {
+            return randomString(1, "!");
+        }
+        function randomBool(probabilityTrue) {
+            if (!isFinite(probabilityTrue)) {
+                probabilityTrue = 0.5;
+            }
+            return Math.random() < probabilityTrue;
+        }
+        function gen2(dic, len, isIncludeNumbers, isIncludeSymbols, isRadnomCapitalize) {
+            var pass = '';
+            var odd = 0;
+            var wasNumber = false;
+            var wasSymbol = false;
+            while (pass.length < len) {
+                odd++;
+                if (odd % 2 == 1) {
+                    pass += randomWord(dic, isRadnomCapitalize);
+                } else {
+                    if (randomBool() && isIncludeSymbols) {
+                        pass += randomSymbol();
+                        wasSymbol = true;
+                    } else if (isIncludeNumbers) {
+                        pass += randomNumber();
+                        wasNumber = true;
+                    }
+                }
+            }
+            if (!wasNumber && isIncludeNumbers) {
+                pass += randomNumber();
+            }
+            if (!wasSymbol && isIncludeSymbols) {
+                pass += randomSymbol();
+            }
+            return pass;
+        }
+        function generate() {
+            var outputs = $("#outputs");
+            outputs.html("");
+
+            if (__global_words_1C812844 == null) {
+                __global_words_1C812844 = downloadWords();
+            }
+
+            var len = parseInt($("#txtMinLength").val());
+            {
+                // validate length
+                if (!isFinite(len)) {
+                    len = 10;
+                }
+                if (len > 20) {
+                    len = 20;
+                }
+                if (len < 6) {
+                    len = 6;
+                }
+                $("#txtMinLength").val(len);
+            }
+            var isIncludeNumbers = $("#chNumbers").is(":checked");
+            var isIncludeSymbols = $("#chSymbols").is(":checked");
+            var isRandomCapitalize = $("#chCapital").is(":checked");
+
+            var count = 10;
+            while (count-- > 0) {
+                output(gen2(__global_words_1C812844, len, isIncludeNumbers, isIncludeSymbols, isRandomCapitalize));
+            }
+        }
+        function downloadWords() {
+            var x = new XMLHttpRequest();
+            x.open("GET", "w.txt", false);
+            x.send();
+            var words = x.responseText.split("\r\n");
+            return words;
+        }
+        var __global_words_1C812844 = downloadWords();
+        generate();
+    </script>
+	<p>
+        <button onclick="generate();" style="font-size:20px; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; vertical-align: middle;">Generate</button></p>
+</body>
+</html>
