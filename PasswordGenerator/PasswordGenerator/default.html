@@ -8,39 +8,18 @@
     <meta name="author" content="Ruslan Galiev">
     <link rel="shortcut icon" href="favicon.ico">
     <title>Password Generator</title>
-    <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap theme -->
     <link href="css/bootstrap-theme.min.css" rel="stylesheet">
-
     <style>
-        body {
-            padding-top: 70px;
-            padding-bottom: 30px;
-        }
-
         .jumbotron p {
           margin-bottom: 5px;
           font-size: 21px;
           font-weight: 200;
         }
-
-        .theme-dropdown .dropdown-menu {
-            position: static;
-            display: block;
-            margin-bottom: 20px;
-        }
-
-        .theme-showcase > p > .btn {
-            margin: 5px 0;
-        }
     </style>
-
 </head>
-<body role="document">
-
-    <!-- Fixed navbar -->
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<body role="document" >
+    <div class="navbar navbar navbar-static-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -56,7 +35,7 @@
                     <li class="active"><a href="#">Home</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
-                    <li class="dropdown">
+                    <!--<li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">Action</a></li>
@@ -67,88 +46,54 @@
                             <li><a href="#">Separated link</a></li>
                             <li><a href="#">One more separated link</a></li>
                         </ul>
-                    </li>
+                    </li>-->
                 </ul>
-            </div><!--/.nav-collapse -->
-        </div>
-    </div>
-
-    <div class="container theme-showcase" role="main">
-
-        <h2>Generated passwords</h2>
-
-        <div class="jumbotron">
-
-            <div id="outputs">
-                <!--<p>
-                    suzy$hokan6
-                </p>
-                <p>
-                    alpen{Lapel32
-                </p>
-                <p>
-                    akra39botH&amp;
-                </p>
-                <p>
-                    pluTo70fiend@
-                </p>
-                <p>
-                    gowl40Testy=
-                </p>
-                <p>
-                    GuAn87zOoks(
-                </p>
-                <p>
-                    Anear=LobE25
-                </p>
-                <p>
-                    cunza=hIspa75
-                </p>
-                <p>
-                    cucK(goEty65
-                </p>
-                <p>
-                    Fore@March93
-                </p>-->
             </div>
         </div>
-
+    </div>
+    <div class="container theme-showcase" role="main">
+        <h2>Generated passwords</h2>
+        <div class="jumbotron" style="background-image: url(images/lock.png); background-position-x: 350px; background-position-y: center; background-repeat: no-repeat;">
+            <div id="outputs">
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+            </div>
+        </div>
         <h2>Options</h2>
-
         <div id="options">
             <p>
                 <span>Create a random pass phrase consisting of short words</span><br />
-
                 <div class="checkbox">
                     <input checked="checked" type="checkbox" id="chNumbers" value="1" />
                     <span>Include Numbers</span>
                 </div>
-
                 <div class="checkbox">
                     <input checked="checked" type="checkbox" id="chSymbols" value="1" />
                     <span>Include Symbols</span>
                 </div>
-
                 <div class="checkbox">
                     <span>Minimum Password Lenght</span>
                     <input id="txtMinLength" value="10" style="width: 30px; height: 25px;" />
                     <span>characters</span>
                 </div>
-
                 <div class="checkbox">
                     <input checked="checked" type="checkbox" id="chCapital" value="1" />
                     <span>Randomly Capitalize Letters</span>
                 </div>
             </p>
-
             <p>
                 <button onclick="generate();" type="button" class="btn btn-lg btn-primary">Generate</button>
             </p>
         </div>
-
-        </
     </div>
-
     <script src="Scripts/jquery-2.1.1.min.js"></script>
     <script>
         "use strict";
@@ -168,7 +113,6 @@
             newLine.html(pass);
             newLine.addClass("pass");
             outputs.append(newLine);
-            //outputs.append($("<br/>"));
         }
         function randomWord(dic, isRandCapital) {
             var w = dic[Math.round(Math.random() * (dic.length - 1))];
@@ -266,12 +210,7 @@
         var __global_words_1C812844 = downloadWords();
         generate();
     </script>
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery-2.1.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 </body>
-
 </html>
