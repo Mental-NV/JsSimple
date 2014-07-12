@@ -14,7 +14,8 @@
         .jumbotron p {
           margin-bottom: 5px;
           font-size: 21px;
-          font-weight: 200;
+          font-weight: bold;
+          font-family: monospace;
         }
     </style>
 </head>
@@ -94,123 +95,122 @@
             </p>
         </div>
     </div>
-    <script src="Scripts/jquery-2.1.1.min.js"></script>
-    <script>
-        "use strict";
-        function randomString(length, chars) {
-            var mask = '';
-            if (chars.indexOf('a') > -1) mask += 'abcdefghijklmnopqrstuvwxyz';
-            if (chars.indexOf('A') > -1) mask += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            if (chars.indexOf('#') > -1) mask += '0123456789';
-            if (chars.indexOf('!') > -1) mask += '~!@#$%^&*()_+-={}:;';
-            var result = '';
-            for (var i = length; i > 0; --i) result += mask[Math.round(Math.random() * (mask.length - 1))];
-            return result;
-        }
-        function output(pass) {
-            var outputs = $("#outputs");
-            var newLine = $("<p>");
-            newLine.html(pass);
-            newLine.addClass("pass");
-            outputs.append(newLine);
-        }
-        function randomWord(dic, isRandCapital) {
-            var w = dic[Math.round(Math.random() * (dic.length - 1))];
-            w = w.toLowerCase();
-            if (isRandCapital) {
-                var nw = "";
-                for (var i = 0; i < w.length; i++) {
-                    if (randomBool(0.2)) {
-                        nw += w[i].toUpperCase();
-                    } else {
-                        nw += w[i].toLowerCase();
-                    }
-                }
-                w = nw;
-            }
-            return w;
-        }
-        function randomNumber() {
-            return Math.round(Math.random() * 100);
-        }
-        function randomSymbol() {
-            return randomString(1, "!");
-        }
-        function randomBool(probabilityTrue) {
-            if (!isFinite(probabilityTrue)) {
-                probabilityTrue = 0.5;
-            }
-            return Math.random() < probabilityTrue;
-        }
-        function gen2(dic, len, isIncludeNumbers, isIncludeSymbols, isRadnomCapitalize) {
-            var pass = '';
-            var odd = 0;
-            var wasNumber = false;
-            var wasSymbol = false;
-            while (pass.length < len) {
-                odd++;
-                if (odd % 2 == 1) {
-                    pass += randomWord(dic, isRadnomCapitalize);
-                } else {
-                    if (randomBool() && isIncludeSymbols) {
-                        pass += randomSymbol();
-                        wasSymbol = true;
-                    } else if (isIncludeNumbers) {
-                        pass += randomNumber();
-                        wasNumber = true;
-                    }
-                }
-            }
-            if (!wasNumber && isIncludeNumbers) {
-                pass += randomNumber();
-            }
-            if (!wasSymbol && isIncludeSymbols) {
-                pass += randomSymbol();
-            }
-            return pass;
-        }
-        function generate() {
-            var outputs = $("#outputs");
-            outputs.html("");
-
-            if (__global_words_1C812844 == null) {
-                __global_words_1C812844 = downloadWords();
-            }
-
-            var len = parseInt($("#txtMinLength").val());
-            {
-                // validate length
-                if (!isFinite(len)) {
-                    len = 10;
-                }
-                if (len > 20) {
-                    len = 20;
-                }
-                if (len < 6) {
-                    len = 6;
-                }
-                $("#txtMinLength").val(len);
-            }
-            var isIncludeNumbers = $("#chNumbers").is(":checked");
-            var isIncludeSymbols = $("#chSymbols").is(":checked");
-            var isRandomCapitalize = $("#chCapital").is(":checked");
-
-            var count = 10;
-            while (count-- > 0) {
-                output(gen2(__global_words_1C812844, len, isIncludeNumbers, isIncludeSymbols, isRandomCapitalize));
-            }
-        }
-        function downloadWords() {
-            var x = new XMLHttpRequest();
-            x.open("GET", "w.txt", false);
-            x.send();
-            var words = x.responseText.split("\r\n");
-            return words;
-        }
-        var __global_words_1C812844 = downloadWords();
-        generate();
-    </script>
     <script src="js/jquery-2.1.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script>
+    "use strict";
+    function randomString(length, chars) {
+        var mask = '';
+        if (chars.indexOf('a') > -1) mask += 'abcdefghijklmnopqrstuvwxyz';
+        if (chars.indexOf('A') > -1) mask += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        if (chars.indexOf('#') > -1) mask += '0123456789';
+        if (chars.indexOf('!') > -1) mask += '~!@#$%^&*()_+-={}:;';
+        var result = '';
+        for (var i = length; i > 0; --i) result += mask[Math.round(Math.random() * (mask.length - 1))];
+        return result;
+    }
+    function output(pass) {
+        var outputs = $("#outputs");
+        var newLine = $("<p>");
+        newLine.html(pass);
+        newLine.addClass("pass");
+        outputs.append(newLine);
+    }
+    function randomWord(dic, isRandCapital) {
+        var w = dic[Math.round(Math.random() * (dic.length - 1))];
+        w = w.toLowerCase();
+        if (isRandCapital) {
+            var nw = "";
+            for (var i = 0; i < w.length; i++) {
+                if (randomBool(0.2)) {
+                    nw += w[i].toUpperCase();
+                } else {
+                    nw += w[i].toLowerCase();
+                }
+            }
+            w = nw;
+        }
+        return w;
+    }
+    function randomNumber() {
+        return Math.round(Math.random() * 100);
+    }
+    function randomSymbol() {
+        return randomString(1, "!");
+    }
+    function randomBool(probabilityTrue) {
+        if (!isFinite(probabilityTrue)) {
+            probabilityTrue = 0.5;
+        }
+        return Math.random() < probabilityTrue;
+    }
+    function gen2(dic, len, isIncludeNumbers, isIncludeSymbols, isRadnomCapitalize) {
+        var pass = '';
+        var odd = 0;
+        var wasNumber = false;
+        var wasSymbol = false;
+        while (pass.length < len) {
+            odd++;
+            if (odd % 2 == 1) {
+                pass += randomWord(dic, isRadnomCapitalize);
+            } else {
+                if (randomBool() && isIncludeSymbols) {
+                    pass += randomSymbol();
+                    wasSymbol = true;
+                } else if (isIncludeNumbers) {
+                    pass += randomNumber();
+                    wasNumber = true;
+                }
+            }
+        }
+        if (!wasNumber && isIncludeNumbers) {
+            pass += randomNumber();
+        }
+        if (!wasSymbol && isIncludeSymbols) {
+            pass += randomSymbol();
+        }
+        return pass;
+    }
+    function generate() {
+        var outputs = $("#outputs");
+        outputs.html("");
+
+        if (__global_words_1C812844 == null) {
+            __global_words_1C812844 = downloadWords();
+        }
+
+        var len = parseInt($("#txtMinLength").val());
+        {
+            // validate length
+            if (!isFinite(len)) {
+                len = 10;
+            }
+            if (len > 20) {
+                len = 20;
+            }
+            if (len < 6) {
+                len = 6;
+            }
+            $("#txtMinLength").val(len);
+        }
+        var isIncludeNumbers = $("#chNumbers").is(":checked");
+        var isIncludeSymbols = $("#chSymbols").is(":checked");
+        var isRandomCapitalize = $("#chCapital").is(":checked");
+
+        var count = 10;
+        while (count-- > 0) {
+            output(gen2(__global_words_1C812844, len, isIncludeNumbers, isIncludeSymbols, isRandomCapitalize));
+        }
+    }
+    function downloadWords() {
+        var x = new XMLHttpRequest();
+        x.open("GET", "words.txt", false);
+        x.send();
+        var words = x.responseText.split("\r\n");
+        return words;
+    }
+    var __global_words_1C812844 = downloadWords();
+    generate();
+    </script>
 </body>
 </html>
