@@ -19,7 +19,7 @@
         }
     </style>
 </head>
-<body role="document" >
+<body role="document">
     <div class="navbar navbar navbar-static-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
@@ -29,30 +29,31 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Password Generator</a>
+                <a class="navbar-brand" href="">Password Generator</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <!--<li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">More info <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li class="dropdown-header">Nav header</li>
-                            <li><a href="#">Separated link</a></li>
-                            <li><a href="#">One more separated link</a></li>
+                            <li><a href="tips.html">Tips about passwords</a></li>
+                            <li><a href="common.html">Common passwords</a></li>
                         </ul>
-                    </li>-->
+                    </li>
+                    <li><a href="contact.html">Contact</a></li>
                 </ul>
             </div>
         </div>
     </div>
     <div class="container theme-showcase" role="main">
+        <div>
+            <h2>Why you should use Password Generator</h2>
+            <p style="text-align: justify">
+                Password security shouldn't be taken lightly. Security professional will tell you that secure passwords should be difficult to guess and difficult to break using brute force methods.
+                The strongest password is a series of random characters. But this is difficult for humans to remember. What good is a secure password when you can't remember it yourself?
+                We offer a password generator that uses real words mixed with enough random numbers and symbols to be secure.
+            </p>
+        </div>
         <h2>Generated passwords</h2>
         <div class="jumbotron" style="background-image: url(images/lock.png); background-position: 350px center; background-repeat: no-repeat;">
             <div id="outputs">
@@ -98,119 +99,119 @@
     <script src="js/jquery-2.1.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script>
-    "use strict";
-    function randomString(length, chars) {
-        var mask = '';
-        if (chars.indexOf('a') > -1) mask += 'abcdefghijklmnopqrstuvwxyz';
-        if (chars.indexOf('A') > -1) mask += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        if (chars.indexOf('#') > -1) mask += '0123456789';
-        if (chars.indexOf('!') > -1) mask += '~!@#$%^&*()_+-={}:;';
-        var result = '';
-        for (var i = length; i > 0; --i) result += mask[Math.round(Math.random() * (mask.length - 1))];
-        return result;
-    }
-    function output(pass) {
-        var outputs = $("#outputs");
-        var newLine = $("<p>");
-        newLine.html(pass);
-        newLine.addClass("pass");
-        outputs.append(newLine);
-    }
-    function randomWord(dic, isRandCapital) {
-        var w = dic[Math.round(Math.random() * (dic.length - 1))];
-        w = w.toLowerCase();
-        if (isRandCapital) {
-            var nw = "";
-            for (var i = 0; i < w.length; i++) {
-                if (randomBool(0.2)) {
-                    nw += w[i].toUpperCase();
+        "use strict";
+        function randomString(length, chars) {
+            var mask = '';
+            if (chars.indexOf('a') > -1) mask += 'abcdefghijklmnopqrstuvwxyz';
+            if (chars.indexOf('A') > -1) mask += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            if (chars.indexOf('#') > -1) mask += '0123456789';
+            if (chars.indexOf('!') > -1) mask += '~!@#$%^&*()_+-={}:;';
+            var result = '';
+            for (var i = length; i > 0; --i) result += mask[Math.round(Math.random() * (mask.length - 1))];
+            return result;
+        }
+        function output(pass) {
+            var outputs = $("#outputs");
+            var newLine = $("<p>");
+            newLine.html(pass);
+            newLine.addClass("pass");
+            outputs.append(newLine);
+        }
+        function randomWord(dic, isRandCapital) {
+            var w = dic[Math.round(Math.random() * (dic.length - 1))];
+            w = w.toLowerCase();
+            if (isRandCapital) {
+                var nw = "";
+                for (var i = 0; i < w.length; i++) {
+                    if (randomBool(0.2)) {
+                        nw += w[i].toUpperCase();
+                    } else {
+                        nw += w[i].toLowerCase();
+                    }
+                }
+                w = nw;
+            }
+            return w;
+        }
+        function randomNumber() {
+            return Math.round(Math.random() * 100);
+        }
+        function randomSymbol() {
+            return randomString(1, "!");
+        }
+        function randomBool(probabilityTrue) {
+            if (!isFinite(probabilityTrue)) {
+                probabilityTrue = 0.5;
+            }
+            return Math.random() < probabilityTrue;
+        }
+        function gen2(dic, len, isIncludeNumbers, isIncludeSymbols, isRadnomCapitalize) {
+            var pass = '';
+            var odd = 0;
+            var wasNumber = false;
+            var wasSymbol = false;
+            while (pass.length < len) {
+                odd++;
+                if (odd % 2 == 1) {
+                    pass += randomWord(dic, isRadnomCapitalize);
                 } else {
-                    nw += w[i].toLowerCase();
+                    if (randomBool() && isIncludeSymbols) {
+                        pass += randomSymbol();
+                        wasSymbol = true;
+                    } else if (isIncludeNumbers) {
+                        pass += randomNumber();
+                        wasNumber = true;
+                    }
                 }
             }
-            w = nw;
+            if (!wasNumber && isIncludeNumbers) {
+                pass += randomNumber();
+            }
+            if (!wasSymbol && isIncludeSymbols) {
+                pass += randomSymbol();
+            }
+            return pass;
         }
-        return w;
-    }
-    function randomNumber() {
-        return Math.round(Math.random() * 100);
-    }
-    function randomSymbol() {
-        return randomString(1, "!");
-    }
-    function randomBool(probabilityTrue) {
-        if (!isFinite(probabilityTrue)) {
-            probabilityTrue = 0.5;
-        }
-        return Math.random() < probabilityTrue;
-    }
-    function gen2(dic, len, isIncludeNumbers, isIncludeSymbols, isRadnomCapitalize) {
-        var pass = '';
-        var odd = 0;
-        var wasNumber = false;
-        var wasSymbol = false;
-        while (pass.length < len) {
-            odd++;
-            if (odd % 2 == 1) {
-                pass += randomWord(dic, isRadnomCapitalize);
-            } else {
-                if (randomBool() && isIncludeSymbols) {
-                    pass += randomSymbol();
-                    wasSymbol = true;
-                } else if (isIncludeNumbers) {
-                    pass += randomNumber();
-                    wasNumber = true;
+        function generate() {
+            var outputs = $("#outputs");
+            outputs.html("");
+
+            if (__global_words_1C812844 == null) {
+                __global_words_1C812844 = downloadWords();
+            }
+
+            var len = parseInt($("#txtMinLength").val());
+            {
+                // validate length
+                if (!isFinite(len)) {
+                    len = 10;
                 }
+                if (len > 20) {
+                    len = 20;
+                }
+                if (len < 6) {
+                    len = 6;
+                }
+                $("#txtMinLength").val(len);
             }
-        }
-        if (!wasNumber && isIncludeNumbers) {
-            pass += randomNumber();
-        }
-        if (!wasSymbol && isIncludeSymbols) {
-            pass += randomSymbol();
-        }
-        return pass;
-    }
-    function generate() {
-        var outputs = $("#outputs");
-        outputs.html("");
+            var isIncludeNumbers = $("#chNumbers").is(":checked");
+            var isIncludeSymbols = $("#chSymbols").is(":checked");
+            var isRandomCapitalize = $("#chCapital").is(":checked");
 
-        if (__global_words_1C812844 == null) {
-            __global_words_1C812844 = downloadWords();
-        }
-
-        var len = parseInt($("#txtMinLength").val());
-        {
-            // validate length
-            if (!isFinite(len)) {
-                len = 10;
+            var count = 10;
+            while (count-- > 0) {
+                output(gen2(__global_words_1C812844, len, isIncludeNumbers, isIncludeSymbols, isRandomCapitalize));
             }
-            if (len > 20) {
-                len = 20;
-            }
-            if (len < 6) {
-                len = 6;
-            }
-            $("#txtMinLength").val(len);
         }
-        var isIncludeNumbers = $("#chNumbers").is(":checked");
-        var isIncludeSymbols = $("#chSymbols").is(":checked");
-        var isRandomCapitalize = $("#chCapital").is(":checked");
-
-        var count = 10;
-        while (count-- > 0) {
-            output(gen2(__global_words_1C812844, len, isIncludeNumbers, isIncludeSymbols, isRandomCapitalize));
+        function downloadWords() {
+            var x = new XMLHttpRequest();
+            x.open("GET", "words.txt", false);
+            x.send();
+            var words = x.responseText.split("\r\n");
+            return words;
         }
-    }
-    function downloadWords() {
-        var x = new XMLHttpRequest();
-        x.open("GET", "words.txt", false);
-        x.send();
-        var words = x.responseText.split("\r\n");
-        return words;
-    }
-    var __global_words_1C812844 = downloadWords();
-    generate();
+        var __global_words_1C812844 = downloadWords();
+        generate();
     </script>
 </body>
 </html>
