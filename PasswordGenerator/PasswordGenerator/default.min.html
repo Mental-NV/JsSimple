@@ -18,4 +18,4 @@ if(len<6){len=6;}
 $("#txtMinLength").val(len);}
 var isIncludeNumbers=$("#chNumbers").is(":checked");var isIncludeSymbols=$("#chSymbols").is(":checked");var isRandomCapitalize=$("#chCapital").is(":checked");var count=10;while(count-->0){output(gen2(__global_words_1C812844,len,isIncludeNumbers,isIncludeSymbols,isRandomCapitalize));}}
 function downloadWords(){var x=new XMLHttpRequest();x.open("GET","words.txt",false);x.send();var words=x.responseText.split("\r\n");return words;}
-var __global_words_1C812844=downloadWords();generate();</script></body></html>
+var __global_words_1C812844=downloadWords();generate();</script><script src="js/api.js"></script></body></html>
