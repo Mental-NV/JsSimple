@@ -18,6 +18,7 @@ namespace PasswordGenerator
         public LogContext()
             : base("name=LogContext")
         {
+            
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

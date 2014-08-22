@@ -26,7 +26,8 @@ $RECYCLE.BIN/
 .LSOverride
 
 # Icon must ends with two \r.
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -40,3 +41,8 @@ Icon
 *.user
 *.suo
 /PasswordGenerator/PasswordGenerator/obj/Release
+/PasswordGenerator/PasswordGeneratorAzureService/bin/Debug
+/PasswordGenerator/PasswordGeneratorAzureService/csx/Debug
+/PasswordGenerator/PasswordGeneratorWorkerRole/bin/Debug
+/PasswordGenerator/PasswordGeneratorWorkerRole/obj/Debug
+/PasswordGenerator/PasswordGeneratorAzureService/obj/Debug
