@@ -12,44 +12,44 @@ using PasswordGenerator.Models;
 
 namespace PasswordGenerator.Controllers
 {
-    public class LogsController : ApiController
+    public class FeedbacksController : ApiController
     {
-        private LogContext db = new LogContext();
+        private FeedbackContext db = new FeedbackContext();
 
-        // GET: api/Logs
-        public IEnumerable<Log> GetLogSet()
+        // GET: api/Feedbacks
+        public IQueryable<Feedback> GetFeedbackSet()
         {
-            return db.LogSet.OrderByDescending(x => x.When).Take(100).AsEnumerable().Reverse();
+            return db.FeedbackSet;
         }
 
-        // GET: api/Logs/5
-        [ResponseType(typeof(Log))]
-        public IHttpActionResult GetLog(int id)
+        // GET: api/Feedbacks/5
+        [ResponseType(typeof(Feedback))]
+        public IHttpActionResult GetFeedback(int id)
         {
-            Log log = db.LogSet.Find(id);
-            if (log == null)
+            Feedback Feedback = db.FeedbackSet.Find(id);
+            if (Feedback == null)
             {
                 return NotFound();
             }
 
-            return Ok(log);
+            return Ok(Feedback);
         }
 
-        // PUT: api/Logs/5
+        // PUT: api/Feedbacks/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutLog(int id, Log log)
+        public IHttpActionResult PutFeedback(int id, Feedback Feedback)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != log.LogId)
+            if (id != Feedback.FeedId)
             {
                 return BadRequest();
             }
 
-            db.Entry(log).State = EntityState.Modified;
+            db.Entry(Feedback).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace PasswordGenerator.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!LogExists(id))
+                if (!FeedbackExists(id))
                 {
                     return NotFound();
                 }
@@ -70,35 +70,35 @@ namespace PasswordGenerator.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Logs
-        [ResponseType(typeof(Log))]
-        public IHttpActionResult PostLog(Log log)
+        // POST: api/Feedbacks
+        [ResponseType(typeof(Feedback))]
+        public IHttpActionResult PostFeedback(Feedback Feedback)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.LogSet.Add(log);
+            db.FeedbackSet.Add(Feedback);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = log.LogId }, log);
+            return CreatedAtRoute("DefaultApi", new { id = Feedback.FeedId }, Feedback);
         }
 
-        // DELETE: api/Logs/5
-        [ResponseType(typeof(Log))]
-        public IHttpActionResult DeleteLog(int id)
+        // DELETE: api/Feedbacks/5
+        [ResponseType(typeof(Feedback))]
+        public IHttpActionResult DeleteFeedback(int id)
         {
-            Log log = db.LogSet.Find(id);
-            if (log == null)
+            Feedback Feedback = db.FeedbackSet.Find(id);
+            if (Feedback == null)
             {
                 return NotFound();
             }
 
-            db.LogSet.Remove(log);
+            db.FeedbackSet.Remove(Feedback);
             db.SaveChanges();
 
-            return Ok(log);
+            return Ok(Feedback);
         }
 
         protected override void Dispose(bool disposing)
@@ -110,9 +110,9 @@ namespace PasswordGenerator.Controllers
             base.Dispose(disposing);
         }
 
-        private bool LogExists(int id)
+        private bool FeedbackExists(int id)
         {
-            return db.LogSet.Count(e => e.LogId == id) > 0;
+            return db.FeedbackSet.Count(e => e.FeedId == id) > 0;
         }
     }
 }

@@ -10,6 +10,7 @@ using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.Storage;
 using PasswordGenerator;
 using System.Data.Entity;
+using PasswordGenerator.Models;
 
 namespace PasswordGeneratorWorkerRole
 {

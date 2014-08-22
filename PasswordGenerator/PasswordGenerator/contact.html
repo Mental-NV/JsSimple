@@ -53,23 +53,64 @@
         <h2>Contact Us</h2>
         <div>
             <span>* Your Name:</span><br />
-            <input type="text" style="width: 200px;" />
+            <input id="userName" type="text" style="width: 200px;" />
             <br />
             <span>* Your Email:</span><br />
-            <input type="text" style="width: 200px;" />
+            <input id="userEmail" type="text" style="width: 200px;" />
             <br />
             <span>Your Message</span><br />
-            <textarea title="Enter any message or comment." style="width: 200px;"></textarea>
+            <textarea id="messageContent" title="Enter any message or comment." style="width: 200px;"></textarea>
             <br />
-            <span>* Type the numbers</span><br />
-            <input type="text" style="width: 200px;" />
+            <!--<span>* Type the numbers</span><br />
+            <input  type="text" style="width: 200px;" />-->
             <br /><br />
-            <button class="btn btn-lg btn-primary">Send</button>
+            <button class="btn btn-lg btn-primary" onclick="sendFeedback();">Send</button>
         </div>
+        <p id="output" style="color: red; font-weight: bold;"></p>
     </div>
     <script src="js/jquery-2.1.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/api.js"></script>
+    <script>
+        function sendFeedback() {
+            var output = $("#output");
+            var txtUserName = $("#userName");
+            var txtUserEmail = $("#userEmail");
+            var txtMessageContent = $("#messageContent");
+
+            var feedback = {
+                Name: txtUserName.val(),
+                Email: txtUserEmail.val(),
+                Message: txtMessageContent.val()
+            };
+
+            $.ajax({
+                url: 'api/Feedbacks',
+                cache: false,
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(feedback),
+                statusCode: {
+                    201 /*Created*/: function (item) {
+                        if (output != null) {
+                            output.val("");
+                        }
+                        txtUserName.val("");
+                        txtUserEmail.val("");
+                        txtMessageContent.val("");
+                        alert("Thank you for a feedback!");
+                    }
+                }
+            })
+            .fail(
+                function (xhr, textStatus, err) {
+                    if (output != null) {
+                        print('Error: ' + err, output);
+                    }
+                }
+            );
+        }
+    </script>
 </body>
 </html>
 

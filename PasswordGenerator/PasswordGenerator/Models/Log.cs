@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PasswordGenerator
+namespace PasswordGenerator.Models
 {
     using System;
     using System.Collections.Generic;

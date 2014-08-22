@@ -7,18 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PasswordGenerator
+namespace PasswordGenerator.Models
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class LogContext : DbContext
+    public partial class FeedbackContext : DbContext
     {
-        public LogContext()
-            : base("name=LogContext")
+        public FeedbackContext()
+            : base("name=FeedbackContext")
         {
-            
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -26,6 +25,6 @@ namespace PasswordGenerator
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Log> LogSet { get; set; }
+        public virtual DbSet<Feedback> FeedbackSet { get; set; }
     }
 }
