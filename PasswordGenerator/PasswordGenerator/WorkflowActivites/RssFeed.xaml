@@ -1,0 +1,157 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="PasswordGenerator.WorkflowActivites.RssFeed"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:local="clr-namespace:PasswordGenerator.WorkflowActivites"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:sss="clr-namespace:System.ServiceModel.Syndication;assembly=System.ServiceModel"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="FeedUrls" Type="InArgument(scg:List(x:Uri))" />
+    <x:Property Name="FeedResult" Type="InOutArgument(scg:List(sss:SyndicationFeed))" />
+  </x:Members>
+  <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
+  <sap2010:WorkflowViewState.IdRef>PasswordGenerator.WorkflowActivites.RssFeed_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Text</x:String>
+      <x:String>System.ServiceModel.Syndication</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>EntityFramework</AssemblyReference>
+      <AssemblyReference>EntityFramework.SqlServer</AssemblyReference>
+      <AssemblyReference>Microsoft.CSharp</AssemblyReference>
+      <AssemblyReference>Microsoft.Data.Edm</AssemblyReference>
+      <AssemblyReference>Microsoft.Data.OData</AssemblyReference>
+      <AssemblyReference>Microsoft.Data.Services.Client</AssemblyReference>
+      <AssemblyReference>Microsoft.WindowsAzure.Configuration</AssemblyReference>
+      <AssemblyReference>Microsoft.WindowsAzure.Diagnostics</AssemblyReference>
+      <AssemblyReference>Microsoft.WindowsAzure.ServiceRuntime</AssemblyReference>
+      <AssemblyReference>Microsoft.WindowsAzure.Storage</AssemblyReference>
+      <AssemblyReference>Newtonsoft.Json</AssemblyReference>
+      <AssemblyReference>System.Data.Services.Client</AssemblyReference>
+      <AssemblyReference>System.Net.Http</AssemblyReference>
+      <AssemblyReference>System.Net.Http.Formatting</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>System.Security</AssemblyReference>
+      <AssemblyReference>System.Spatial</AssemblyReference>
+      <AssemblyReference>System.Web.DynamicData</AssemblyReference>
+      <AssemblyReference>System.Web.Entity</AssemblyReference>
+      <AssemblyReference>System.Web.ApplicationServices</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.DataAnnotations</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.Web.Extensions</AssemblyReference>
+      <AssemblyReference>System.Web.Http</AssemblyReference>
+      <AssemblyReference>System.Web.Http.WebHost</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Web</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Configuration</AssemblyReference>
+      <AssemblyReference>System.Web.Services</AssemblyReference>
+      <AssemblyReference>System.EnterpriseServices</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>PasswordGenerator</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Flowchart sap2010:WorkflowViewState.IdRef="Flowchart_1">
+    <Flowchart.StartNode>
+      <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_1">
+        <ParallelForEach x:TypeArguments="x:Uri" DisplayName="ParallelForEach&lt;Uri&gt;" sap2010:WorkflowViewState.IdRef="ParallelForEach`1_1">
+          <ParallelForEach.Values>
+            <InArgument x:TypeArguments="scg:IEnumerable(x:Uri)">
+              <mca:CSharpValue x:TypeArguments="scg:IEnumerable(x:Uri)">FeedUrls</mca:CSharpValue>
+            </InArgument>
+          </ParallelForEach.Values>
+          <ActivityAction x:TypeArguments="x:Uri">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="x:Uri" Name="item" />
+            </ActivityAction.Argument>
+            <Sequence sap2010:WorkflowViewState.IdRef="Sequence_1">
+              <Sequence.Variables>
+                <Variable x:TypeArguments="sss:SyndicationFeed" Name="currentFeed" />
+              </Sequence.Variables>
+              <local:GetFeed>
+                <local:GetFeed.FeedUrl>
+                  <InArgument x:TypeArguments="x:Uri">
+                    <mca:CSharpValue x:TypeArguments="x:Uri">item</mca:CSharpValue>
+                  </InArgument>
+                </local:GetFeed.FeedUrl>
+                <local:GetFeed.Result>
+                  <OutArgument x:TypeArguments="sss:SyndicationFeed">
+                    <mca:CSharpReference x:TypeArguments="sss:SyndicationFeed">currentFeed</mca:CSharpReference>
+                  </OutArgument>
+                </local:GetFeed.Result>
+                <sap2010:WorkflowViewState.IdRef>GetFeed_1</sap2010:WorkflowViewState.IdRef>
+              </local:GetFeed>
+              <AddToCollection x:TypeArguments="sss:SyndicationFeed" DisplayName="AddToCollection&lt;SyndicationFeed&gt;">
+                <AddToCollection.Item>
+                  <InArgument x:TypeArguments="sss:SyndicationFeed">
+                    <mca:CSharpValue x:TypeArguments="sss:SyndicationFeed">currentFeed</mca:CSharpValue>
+                  </InArgument>
+                </AddToCollection.Item>
+                <InArgument x:TypeArguments="scg:ICollection(sss:SyndicationFeed)">
+                  <mca:CSharpValue x:TypeArguments="scg:ICollection(sss:SyndicationFeed)">FeedResult</mca:CSharpValue>
+                </InArgument>
+                <sap2010:WorkflowViewState.IdRef>AddToCollection`1_1</sap2010:WorkflowViewState.IdRef>
+              </AddToCollection>
+            </Sequence>
+          </ActivityAction>
+        </ParallelForEach>
+      </FlowStep>
+    </Flowchart.StartNode>
+    <x:Reference>__ReferenceID0</x:Reference>
+    <sads:DebugSymbol.Symbol>d2JDOlxVc2Vyc1xNZW50YWxcR2l0SHViXEpzU2ltcGxlXFBhc3N3b3JkR2VuZXJhdG9yXFBhc3N3b3JkR2VuZXJhdG9yXFdvcmtmbG93QWN0aXZpdGVzXFJzc0ZlZWQueGFtbApLA3sPAgEBTgl2GwIBAlEPUWMCARpYDXQYAgEDXA9oHwIBD2kPcyECAQRfFV9UAgEVZBVkcQIBEHATcHcCAQpsFWxpAgEF</sads:DebugSymbol.Symbol>
+  </Flowchart>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="GetFeed_1" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="AddToCollection`1_1" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="222,208">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ParallelForEach`1_1" sap:VirtualizedContainerService.HintSize="200,51" />
+      <sap2010:ViewStateData Id="FlowStep_1">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">200,127.5</av:Point>
+            <av:Size x:Key="ShapeSize">200,51</av:Size>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="614,636">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
+            <av:Size x:Key="ShapeSize">60,75</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,127.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="PasswordGenerator.WorkflowActivites.RssFeed_1" sap:VirtualizedContainerService.HintSize="654,716" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>
