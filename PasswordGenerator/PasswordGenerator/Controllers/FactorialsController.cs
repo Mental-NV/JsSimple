@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PasswordGenerator.Activities;
+using System;
 using System.Activities;
 using System.Collections.Generic;
 using System.Linq;

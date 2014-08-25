@@ -6,7 +6,7 @@ using System.Activities;
 using System.ServiceModel.Syndication;
 using System.Xml;
 
-namespace PasswordGenerator.WorkflowActivites
+namespace PasswordGenerator.Activities
 {
 
     public sealed class GetFeed : CodeActivity<SyndicationFeed>

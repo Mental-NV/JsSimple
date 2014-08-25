@@ -46,3 +46,7 @@ Icon
 /PasswordGenerator/PasswordGeneratorWorkerRole/bin/Debug
 /PasswordGenerator/PasswordGeneratorWorkerRole/obj/Debug
 /PasswordGenerator/PasswordGeneratorAzureService/obj/Debug
+/PasswordGenerator/PasswordGenerator.Activities/bin/Debug
+/PasswordGenerator/PasswordGenerator.Test/bin/Debug
+/PasswordGenerator/PasswordGenerator.Test/obj/Debug
+/PasswordGenerator/PasswordGenerator.Activities/obj/Debug

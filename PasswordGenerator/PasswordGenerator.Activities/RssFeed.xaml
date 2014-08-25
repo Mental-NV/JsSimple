@@ -1,7 +1,7 @@
-﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="PasswordGenerator.WorkflowActivites.RssFeed"
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="PasswordGenerator.Activities.RssFeed"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
- xmlns:local="clr-namespace:PasswordGenerator.WorkflowActivites"
+ xmlns:local="clr-namespace:PasswordGenerator.Activities"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities"
  xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
@@ -16,7 +16,7 @@
     <x:Property Name="FeedResult" Type="InOutArgument(scg:List(sss:SyndicationFeed))" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap2010:WorkflowViewState.IdRef>PasswordGenerator.WorkflowActivites.RssFeed_1</sap2010:WorkflowViewState.IdRef>
+  <sap2010:WorkflowViewState.IdRef>PasswordGenerator.Activities.RssFeed_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System</x:String>
@@ -151,7 +151,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="PasswordGenerator.WorkflowActivites.RssFeed_1" sap:VirtualizedContainerService.HintSize="654,716" />
+      <sap2010:ViewStateData Id="PasswordGenerator.Activities.RssFeed_1" sap:VirtualizedContainerService.HintSize="654,716" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
