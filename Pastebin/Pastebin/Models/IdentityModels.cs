@@ -31,5 +31,7 @@ namespace Pastebin.Models
         }
 
         public System.Data.Entity.DbSet<Pastebin.Models.Contact> Contacts { get; set; }
+
+        public System.Data.Entity.DbSet<Pastebin.Models.Paste> Pastes { get; set; }
     }
 }
