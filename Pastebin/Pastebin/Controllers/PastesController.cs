@@ -15,6 +15,7 @@ namespace Pastebin.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Pastes
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View(db.Pastes.ToList());
