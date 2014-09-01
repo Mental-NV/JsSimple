@@ -205,6 +205,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\pastenote - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\pastenote - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\patebin1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
