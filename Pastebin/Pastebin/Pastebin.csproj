@@ -161,7 +161,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CmController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PastesController.cs" />
@@ -257,11 +256,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Cm\Create.cshtml" />
-    <Content Include="Views\Cm\Delete.cshtml" />
-    <Content Include="Views\Cm\Details.cshtml" />
-    <Content Include="Views\Cm\Edit.cshtml" />
-    <Content Include="Views\Cm\Index.cshtml" />
     <Content Include="Views\Pastes\Create.cshtml" />
     <Content Include="Views\Pastes\Delete.cshtml" />
     <Content Include="Views\Pastes\Details.cshtml" />
