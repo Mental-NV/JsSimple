@@ -1,24 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using Pastebin.Models;
-
-namespace Pastebin.Controllers
+﻿namespace Pastebin.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Net;
+    using System.Web;
+    using System.Web.Mvc;
+    using Pastebin.Models;
+    using Microsoft.WindowsAzure.Storage;
+    using Microsoft.WindowsAzure.Storage.Auth;
+    using Microsoft.WindowsAzure.Storage.Table;
+    using System.Configuration;
+
     public class PastesController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private CloudStorageAccount storageAccount = CloudStorageAccount.Parse(ConfigurationManager.ConnectionStrings["StorageConnectionString"].ConnectionString);
+
+        private CloudTable PastesTable
+        {
+            get
+            {
+                if (_pastesTable == null)
+                {
+                    var tableClient = storageAccount.CreateCloudTableClient();
+                    _pastesTable = tableClient.GetTableReference("pastes");
+                    _pastesTable.CreateIfNotExists();
+                }
+                return _pastesTable;
+            }
+        }
+        private CloudTable _pastesTable;
 
         // GET: Pastes
         [AllowAnonymous]
         public ActionResult Index()
         {
-            return View(db.Pastes.ToList());
+            var pastes = PastesTable.ExecuteQuery(new TableQuery<Paste>()).ToList();
+            return View(pastes);
         }
 
         // GET: Pastes/Details/5
@@ -28,7 +48,7 @@ namespace Pastebin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Paste paste = db.Pastes.Find(id);
+            var paste = PastesTable.CreateQuery<Paste>().Where(x => x.PasteId == id).ToList().FirstOrDefault();
             if (paste == null)
             {
                 return HttpNotFound();
@@ -57,15 +77,14 @@ namespace Pastebin.Controllers
             {
                 paste.Title = "Untitled";
             }
-            
-            if (ModelState.IsValid)
-            {
-                db.Pastes.Add(paste);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
 
-            return View(paste);
+            paste.PartitionKey = paste.UserId;
+            paste.RowKey = paste.PasteId;
+
+            var op = TableOperation.Insert(paste);
+            PastesTable.Execute(op);
+
+            return RedirectToAction("Index");
         }
 
         private string GetUserId()
@@ -80,7 +99,9 @@ namespace Pastebin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Paste paste = db.Pastes.Find(id);
+
+            var paste = PastesTable.CreateQuery<Paste>().Where(x => x.PasteId == id).ToList().FirstOrDefault();
+
             if (paste == null)
             {
                 return HttpNotFound();
@@ -95,13 +116,10 @@ namespace Pastebin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "PasteId,Title,Content,UserId,Created")] Paste paste)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(paste).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(paste);
+            paste.RowKey = paste.PasteId;
+            paste.PartitionKey = paste.UserId;
+            PastesTable.Execute(TableOperation.InsertOrReplace(paste));
+            return RedirectToAction("Index");
         }
 
         // GET: Pastes/Delete/5
@@ -111,7 +129,9 @@ namespace Pastebin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Paste paste = db.Pastes.Find(id);
+
+            var paste = PastesTable.CreateQuery<Paste>().Where(x => x.PasteId == id).ToList().FirstOrDefault();
+
             if (paste == null)
             {
                 return HttpNotFound();
@@ -124,19 +144,13 @@ namespace Pastebin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Paste paste = db.Pastes.Find(id);
-            db.Pastes.Remove(paste);
-            db.SaveChanges();
+            var paste = PastesTable.CreateQuery<Paste>().Where(x => x.PasteId == id).ToList().FirstOrDefault();
+            paste.RowKey = paste.PasteId;
+            paste.PartitionKey = paste.UserId;
+            var op = TableOperation.Delete(paste);
+            PastesTable.Execute(op);
+            
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }
