@@ -109,3 +109,7 @@ Icon
 /Pastebin/Pastebin/bin/System.Web.WebPages.xml
 /Pastebin/packages
 *.rar
+/Downloader/Downloader.Tests/obj/Debug
+/Downloader/Downloader.Tests/bin/Debug
+/Downloader/Downloader/obj/Debug
+/Downloader/Downloader/bin
