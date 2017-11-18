@@ -63,7 +63,7 @@
             {
                 if (_words == null)
                 {
-                    var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "words.txt");
+                    var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "w.txt");
                     var content = File.ReadAllText(path);
                     var words = content.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
                     _words = new List<string>(words);
