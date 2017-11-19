@@ -90,20 +90,20 @@
             <p>
                 <span>Create a random pass phrase consisting of short words</span><br />
                 <div class="checkbox">
-                    <input checked="checked" type="checkbox" id="chNumbers" value="1" />
+                    <input checked="checked" type="checkbox" id="chNumbers" value="" />
                     <span>Include Numbers</span>
                 </div>
                 <div class="checkbox">
-                    <input checked="checked" type="checkbox" id="chSymbols" value="1" />
+                    <input checked="checked" type="checkbox" id="chSymbols" value="" />
                     <span>Include Symbols</span>
                 </div>
                 <div class="checkbox">
                     <span>Minimum Password Lenght</span>
-                    <input id="txtMinLength" value="10" style="width: 30px; height: 25px;" />
+                    <input id="txtMinLength" value="" style="width: 30px; height: 25px;" />
                     <span>characters</span>
                 </div>
                 <div class="checkbox">
-                    <input checked="checked" type="checkbox" id="chCapital" value="1" />
+                    <input checked="checked" type="checkbox" id="chCapital" value="" />
                     <span>Randomly Capitalize Letters</span>
                 </div>
             </p>
@@ -116,6 +116,28 @@
     <script src="js/bootstrap.min.js"></script>
     <script>
         "use strict";
+        function saveOptions() {
+            localStorage.setItem("chNumbers", $("#chNumbers").prop("checked"));
+            localStorage.setItem("chSymbols", $("#chSymbols").prop("checked"));
+            localStorage.setItem("chCapital", $("#chCapital").prop("checked"));
+            var txtMinLengthValue = parseInt($("#txtMinLength").val());
+            if (!isNaN(txtMinLengthValue) && txtMinLengthValue > 3) {
+                localStorage.setItem("txtMinLength", txtMinLengthValue);
+            }
+        }
+        function loadItem(name, defaultValue) {
+            var value = localStorage.getItem(name);
+            if (!value) {
+                value = defaultValue;
+            }
+            return value;
+        }
+        function loadOptions() {
+            $("#chNumbers").prop("checked", loadItem("chNumbers", "true") == "true");
+            $("#chSymbols").prop("checked", loadItem("chSymbols", "true") == "true");
+            $("#chCapital").prop("checked", loadItem("chCapital", "true") == "true");
+            $("#txtMinLength").val(loadItem("txtMinLength", 10));
+        }
         function randomString(length, chars) {
             var mask = '';
             if (chars.indexOf('a') > -1) mask += 'abcdefghijklmnopqrstuvwxyz';
@@ -226,6 +248,8 @@
             var words = x.responseText.split("\r\n");
             return words;
         }
+        loadOptions();
+        $("input").change(ev => saveOptions());
         var __global_words_1C812844 = downloadWords();
         generate();
     </script>
